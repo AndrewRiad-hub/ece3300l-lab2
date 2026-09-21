@@ -9,10 +9,29 @@ module calculator (
    wire [3:0]			outa;  // adder output
    wire [7:0]			outm;  // multiplier output
 
-//
-// make instances of the three modules addsub4, mult4, and mux10
-// and wire them up to create the functionality required.
-//
+ addsub4 addsub_unit (
+        .A(A),
+        .B(B),
+        .subsel(OP[0]),
+        .X(outa),
+        .cout(cout),
+        .ovf(ovf)
+    );
+
+  
+    mult4 multiplier_unit (
+        .A(A),
+        .B(B),
+        .X(outm)
+    );
+
+ 
+    mux10 output_mux (
+        .in0({ovf, cout, 4'b0000, outa}),
+        .in1({2'b00, outm}),
+        .sel(OP[1]),
+        .out(out)
+    );
 	
 endmodule // calculator
 
