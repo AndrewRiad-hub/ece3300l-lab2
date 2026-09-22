@@ -28,35 +28,35 @@ module mult4 (
     assign X[0] = partial0[0];
 
     add4 stage1 (
-        .carryin(1'b0),
-        .X(partial1),
-        .Y({1'b0, partial0[3:1]}),
-        .S(sum1),
-		.carryout(carry[0]),
-		.ovf(unused_ovf[0])
-    );
+    	.carryin(1'b0),
+    	.X({1'b0, partial0[3:1]}),
+    	.Y(partial1),
+    	.S(sum1),
+    	.carryout(carry[0]),
+    	.ovf(unused_ovf[0])
+	);
 
     assign X[1] = sum1[0];
 
-    add4 stage2 (
-        .carryin(1'b0),
-        .X(partial2),
-        .Y({carry1, sum1[3:1]}),
-        .S(sum2),
-		.carryout(carry[1]),
-		.ovf(unused_ovf[1])
-    );
-
+   add4 stage2 (
+    	.carryin(1'b0),
+    	.X({carry[0], sum1[3:1]}),
+    	.Y(partial2),
+    	.S(sum2),
+    	.carryout(carry[1]),
+    	.ovf(unused_ovf[1])
+	);
+	
     assign X[2] = sum2[0];
 
     add4 stage3 (
-        .carryin(1'b0),
-        .X(partial3),
-        .Y({carry2, sum2[3:1]}),
-        .S(sum3),
-		.carryout(carry[2]),
-		.ovf(unused_ovf[2])
-    );
+    	.carryin(1'b0),
+    	.X({carry[1], sum2[3:1]}),
+    	.Y(partial3),
+    	.S(sum3),
+    	.carryout(carry[2]),
+    	.ovf(unused_ovf[2])
+	);
 
     assign X[6:3] = sum3;
 	assign X[7]   = carry[2];
